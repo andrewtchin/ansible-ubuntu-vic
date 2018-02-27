@@ -7,6 +7,10 @@ echo "Bootstrap"
 curl -L https://raw.githubusercontent.com/andrewtchin/ansible-ubuntu-vic/master/ubuntu-bootstrap.sh | sh
 
 echo "Install devel Ansible"
+ANSIBLE_DIR="$HOME/ansible"
+if [ -d "$ANSIBLE_DIR" ]; then
+  rm -rf $ANSIBLE_DIR
+fi
 git clone https://github.com/ansible/ansible.git --recursive
 source ./ansible/hacking/env-setup
 
