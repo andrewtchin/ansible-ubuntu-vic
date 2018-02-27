@@ -1,0 +1,29 @@
+---
+- include: common.yml
+- include: developer.yml
+
+- name: Configure Ubuntu Desktop for VIC development
+  hosts: all
+  gather_facts: yes
+
+  roles:
+    - remap-esc
+    - chrome
+    - firefox
+    - unity-cleanup
+    - pwgen
+    - docker
+    - docker-version-manager
+    - docker-systemd-vmware
+    - docker-compose
+    - dronecli
+    - gosudo
+    - govc
+    - delve
+    - gotools
+    - cfssl
+    - robotframework
+    - asciinema
+    - disable-idle-screen
+    - gcloud
+    - zshrc

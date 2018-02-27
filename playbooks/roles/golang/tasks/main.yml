@@ -1,0 +1,28 @@
+- name: Download the Go tarball
+  get_url: url=https://storage.googleapis.com/golang/go1.8.linux-amd64.tar.gz
+           dest=/tmp/go1.8.linux-amd64.tar.gz
+           checksum=sha256:53ab94104ee3923e228a2cb2116e5e462ad3ebaeea06ff04463479d7f12d27ca
+
+- name: Uninstall current Go version if present
+  become: yes
+  file: path=/usr/local/go state=absent
+
+- name: Extract the Go tarball
+  become: yes
+  unarchive: src=/tmp/go1.8.linux-amd64.tar.gz
+             dest=/usr/local
+             copy=no
+
+- name: Create go bin directory
+  file: path={{ ansible_env.HOME }}/go/bin
+        state=directory
+        mode=0755
+        owner={{ ansible_env.USER }}
+        group={{ ansible_env.USER }}
+
+- name: Create go src directory
+  file: path={{ ansible_env.HOME }}/go/src/github.com
+        state=directory
+        mode=0755
+        owner={{ ansible_env.USER }}
+        group={{ ansible_env.USER }}

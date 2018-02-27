@@ -1,0 +1,4 @@
+{
+    "set_hostname": "ubuntu",
+    "ssh_port": "22"
+}

@@ -1,0 +1,27 @@
+- name: Install python
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+  become: yes
+  with_items:
+    - python
+    - python-dev
+    - python-pip
+    - python-software-properties
+    - python-setuptools
+    - python3-setuptools
+    - python3-pip
+
+- name: Install python packages
+  pip:
+    name: "{{ item }}"
+    state: latest
+  become: yes
+  with_items:
+    - pip
+    - awscli
+    - boto
+    - flake8
+    - ipdb
+    - pylint
+    - virtualenv

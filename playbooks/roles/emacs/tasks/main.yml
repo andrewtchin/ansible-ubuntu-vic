@@ -1,0 +1,14 @@
+- name: Install emacs repository
+  become: yes
+  apt_repository: repo='ppa:ubuntu-elisp/ppa' update_cache=yes mode=0644
+
+- name: Install emacs
+  become: yes
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - emacs24
+    - emacs24-el
+    - emacs24-common-non-dfsg
+
+- name: Install spacemacs
+  git: repo=https://github.com/syl20bnr/spacemacs dest=~/.emacs.d

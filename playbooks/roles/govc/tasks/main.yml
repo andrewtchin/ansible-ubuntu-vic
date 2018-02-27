@@ -1,0 +1,20 @@
+- name: Download the govc gz
+  get_url:
+    url: https://github.com/vmware/govmomi/releases/download/v0.16.0/govc_linux_amd64.gz
+    dest: /tmp/govc_linux_amd64.gz
+    checksum: sha256:f5363b6e10af6c757236018e58389000f5740ac12d4a43971de64eba534e87a7
+
+- name: Uncompress govc
+  become: yes
+  command: gzip -d /tmp/govc_linux_amd64.gz
+
+- name: chmod +x govc
+  become: yes
+  file:
+    path: /tmp/govc_linux_amd64
+    state: file
+    mode: 0755
+
+- name: Install govc
+  become: yes
+  command: mv /tmp/govc_linux_amd64 /usr/local/bin/govc

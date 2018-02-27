@@ -1,0 +1,5 @@
+- name: Install Firefox
+  become: yes
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - firefox

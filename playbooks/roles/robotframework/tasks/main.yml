@@ -1,0 +1,17 @@
+- name: Install Robot Framework
+  become: yes
+  pip:
+    name: robotframework
+    state: latest
+
+- name: Install Selenium
+  become: yes
+  pip:
+    name: robotframework-selenium2library
+    state: latest
+
+- name: Install Python SSH
+  become: yes
+  pip:
+    name: ssh
+    state: latest

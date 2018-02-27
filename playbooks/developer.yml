@@ -1,0 +1,14 @@
+---
+- name: Developer tools.
+  hosts: all
+  gather_facts: yes
+
+  roles:
+    - dev-directory
+    - developer-tools-apt
+    - atom
+    - docker
+    - emacs
+    - python
+    - golang
+    - antigen

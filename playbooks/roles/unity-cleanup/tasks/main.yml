@@ -1,0 +1,26 @@
+- name: Determine Unity packages to remove
+  shell: dpkg --get-selections | cut -f1 | grep -P "^unity-(lens|scope)-" | grep -vP "unity-(lens|scope)-(home|applications|files)"
+  register: unity_remove_packages
+  ignore_errors: yes
+
+- name: Remove Unity packages
+  become: yes
+  apt: pkg={{ item }} state=absent
+  with_items:
+    - "{{ unity_remove_packages.stdout_lines }}"
+  ignore_errors: yes
+
+- name: Disable Unity Dash scopes
+  shell: gsettings set com.canonical.Unity.Lenses disabled-scopes "['more_suggestions-amazon.scope', 'more_suggestions-u1ms.scope', 'more_suggestions-populartracks.scope', 'music-musicstore.scope', 'more_suggestions-ebay.scope', 'more_suggestions-ubuntushop.scope', 'more_suggestions-skimlinks.scope']"
+
+- name: Set Unity search scopes
+  shell: gsettings set com.canonical.Unity.Lenses always-search "['applications.scope']"
+
+- name: Set Unity Dash scopes
+  shell: gsettings set com.canonical.Unity.Dash scopes "['home.scope', 'applications.scope', 'files.scope']";
+
+- name: Disable Unity online search results
+  shell: gsettings set com.canonical.Unity.Lenses remote-content-search 'none'
+
+- name: Set Unity Launcher icons
+  shell: gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'application://nautilus.desktop', 'application://gnome-terminal.desktop', 'application://firefox.desktop', 'application://google-chrome.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']"
