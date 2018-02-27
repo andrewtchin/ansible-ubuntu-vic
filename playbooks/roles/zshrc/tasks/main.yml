@@ -1,5 +1,5 @@
 - name: "Install default zshrc"
-  file:
+  copy:
     src: zshrc
     dest: "/home/{{ ansible_env.USER }}/.zshrc"
     owner: "{{ ansible_env.USER }}"
