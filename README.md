@@ -11,7 +11,7 @@ Create an Ubuntu 16.04 VM. Recommended minimum sizing is 2 vCPU and 4 GB RAM and
 Run the following commands:
 
 1. Installs vim, emacs, development tools, docker, docker-compose, go, govc, drone cli, robot framework,
-   delve, packer, asciinema, Google Cloud SDK, cfssl, ShellCheck, changes shell to ZSH
+   delve, asciinema, Google Cloud SDK, cfssl, ShellCheck, changes shell to ZSH
 
    NOTE: Latest docker client is installed by default. Use Docker Version Manager to install 1.13
    client required for VIC Engine in Step 6
