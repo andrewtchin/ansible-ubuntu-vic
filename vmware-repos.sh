@@ -6,10 +6,8 @@ function test_repo() {
   URL="https://github.com/$GITHUB_USER/$1"
   STATUS=$(curl -s -o /dev/null -I -w "%{http_code}" $URL)
   if [ "$STATUS" == "200" ]; then
-    echo "$URL found"
     return 0
   else
-    echo "$URL not found"
     return 1
   fi
 }
