@@ -2,15 +2,15 @@
 # Predictable SSH authentication socket location
 # so that ssh-agent works on reattach to tmux sessions.
 
-# Start SSH agent if not running
-if ! ps aux | grep $(whoami) | grep ssh-agent | grep -v grep >/dev/null; then ssh-agent ; fi
-
 SOCK="~/.ssh/ssh-agent-$USER-screen"
 if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]; then
     rm -f ~/.ssh/ssh-agent-$USER-screen
     ln -sf $SSH_AUTH_SOCK $SOCK
     export SSH_AUTH_SOCK=$SOCK
 fi
+
+# Start SSH agent if not running
+if ! ps aux | grep $(whoami) | grep ssh-agent | grep -v grep >/dev/null; then eval $(ssh-agent -a $SSH_AUTH_SOCK -s) ; fi
 
 [[ -d "$HOME/go" ]] && export GOPATH=$HOME/go
 [[ -n "$GOPATH" ]] && export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
