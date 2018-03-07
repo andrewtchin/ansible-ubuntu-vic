@@ -16,7 +16,8 @@ function test_repo() {
 }
 
 echo "Cloning VIC"
-if [ test_repo vic ]; then
+EXISTS=$(test_repo vic)
+if [ $EXISTS ]; then
   git clone git@github.com:${GITHUB_USER}/vic.git ~/go/src/github.com/vmware/vic
 else
   echo "Failed to find repo"
@@ -29,7 +30,8 @@ git remote update
 curl https://cdn.rawgit.com/tommarshall/git-good-commit/v0.6.1/hook.sh > .git/hooks/commit-msg && chmod +x .git/hooks/commit-msg
 
 echo "Cloning vic-product"
-if [ test_repo vic-product ]; then
+EXISTS=$(test_repo vic-product)
+if [ $EXISTS ]; then
   git clone git@github.com:${GITHUB_USER}/vic-product.git ~/go/src/github.com/vmware/vic-product
 else
   echo "Failed to find repo, cloning upstream"
