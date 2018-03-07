@@ -25,6 +25,7 @@ fi
 
 cd ~/go/src/github.com/vmware/vic
 git remote add upstream git@github.com:vmware/vic.git
+git remote update
 curl https://cdn.rawgit.com/tommarshall/git-good-commit/v0.6.1/hook.sh > .git/hooks/commit-msg && chmod +x .git/hooks/commit-msg
 
 echo "Cloning vic-product"
@@ -37,6 +38,7 @@ fi
 
 cd ~/go/src/github.com/vmware/vic-product
 git remote add upstream git@github.com:vmware/vic-product.git
+git remote update
 curl https://cdn.rawgit.com/tommarshall/git-good-commit/v0.6.1/hook.sh > .git/hooks/commit-msg && chmod +x .git/hooks/commit-msg
 
 echo "Cloning govmomi"
