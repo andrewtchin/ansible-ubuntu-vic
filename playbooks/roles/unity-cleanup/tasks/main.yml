@@ -12,15 +12,20 @@
 
 - name: Disable Unity Dash scopes
   shell: gsettings set com.canonical.Unity.Lenses disabled-scopes "['more_suggestions-amazon.scope', 'more_suggestions-u1ms.scope', 'more_suggestions-populartracks.scope', 'music-musicstore.scope', 'more_suggestions-ebay.scope', 'more_suggestions-ubuntushop.scope', 'more_suggestions-skimlinks.scope']"
+  ignore_errors: yes
 
 - name: Set Unity search scopes
   shell: gsettings set com.canonical.Unity.Lenses always-search "['applications.scope']"
+  ignore_errors: yes
 
 - name: Set Unity Dash scopes
   shell: gsettings set com.canonical.Unity.Dash scopes "['home.scope', 'applications.scope', 'files.scope']";
+  ignore_errors: yes
 
 - name: Disable Unity online search results
   shell: gsettings set com.canonical.Unity.Lenses remote-content-search 'none'
+  ignore_errors: yes
 
 - name: Set Unity Launcher icons
   shell: gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'application://nautilus.desktop', 'application://gnome-terminal.desktop', 'application://firefox.desktop', 'application://google-chrome.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']"
+  ignore_errors: yes
