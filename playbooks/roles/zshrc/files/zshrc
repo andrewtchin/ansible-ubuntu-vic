@@ -1,24 +1,41 @@
-# ssh-agent
-# Predictable SSH authentication socket location
-# so that ssh-agent works on reattach to tmux sessions.
+# Skip if requirements are not found.
+if (( $+commands[ssh-agent] )); then
+	# Set the path to the SSH directory.
+	_ssh_dir="$HOME/.ssh"
 
-SOCK="/tmp/ssh-agent-$USER-screen"
-if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]; then
-    rm -f /tmp/ssh-agent-$USER-screen
-    ln -sf $SSH_AUTH_SOCK $SOCK
-    export SSH_AUTH_SOCK=$SOCK
+	# Set the path to the environment file if not set by another module.
+	_ssh_agent_env="${_ssh_agent_env:-${TMPDIR:-/tmp}/ssh-agent.env.$UID}"
+
+	# Set the path to the persistent authentication socket.
+	_ssh_agent_sock="${TMPDIR:-/tmp}/ssh-agent.sock.$UID"
+
+	# Start ssh-agent if not started.
+	if [[ ! -S "$SSH_AUTH_SOCK" ]]; then
+		# Export environment variables.
+		source "$_ssh_agent_env" 2> /dev/null
+
+		# Start ssh-agent if not started.
+		if ! ps -U "$LOGNAME" -o pid,ucomm | grep -q -- "${SSH_AGENT_PID:--1} ssh-agent"; then
+			eval "$(ssh-agent | sed '/^echo /d' | tee "$_ssh_agent_env")"
+		fi
+	fi
+
+	# Create a persistent SSH authentication socket.
+	if [[ -S "$SSH_AUTH_SOCK" && "$SSH_AUTH_SOCK" != "$_ssh_agent_sock" ]]; then
+		ln -sf "$SSH_AUTH_SOCK" "$_ssh_agent_sock"
+		export SSH_AUTH_SOCK="$_ssh_agent_sock"
+	fi
 fi
 
-
-# Start SSH agent if not running and not using gnome-keyring
-$(ps aux | grep $(whoami) | grep gnome-keyring | grep -v grep > /dev/null;)
-GK=$?
-if [[ "$GK" -ne 0 ]]; then
-  if ! ps aux | grep $(whoami) | grep ssh-agent | grep -v grep >/dev/null; then
-    echo "Starting ssh-agent"
-    eval $(ssh-agent -a $SSH_AUTH_SOCK -s)
-  fi
-fi
+# # Start SSH agent if not running and not using gnome-keyring
+# $(ps aux | grep $(whoami) | grep gnome-keyring | grep -v grep > /dev/null;)
+# GK=$?
+# if [[ "$GK" -ne 0 ]]; then
+#   if ! ps aux | grep $(whoami) | grep ssh-agent | grep -v grep >/dev/null; then
+#     echo "Starting ssh-agent"
+#     eval $(ssh-agent -a $SSH_AUTH_SOCK -s)
+#   fi
+# fi
 
 [[ -d "$HOME/go" ]] && export GOPATH=$HOME/go
 [[ -n "$GOPATH" ]] && export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
