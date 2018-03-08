@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -x
-
 function test_repo() {
   URL="https://github.com/$GITHUB_USER/$1"
   STATUS=$(curl -s -o /dev/null -I -w "%{http_code}" $URL)
@@ -50,4 +48,3 @@ curl https://cdn.rawgit.com/tommarshall/git-good-commit/v0.6.1/hook.sh > .git/ho
 
 echo "Cloning govmomi"
 git clone git@github.com:vmware/govmomi.git ~/go/src/github.com/vmware/govmomi
-cd ~/go/src/github.com/vmware/govmomi
