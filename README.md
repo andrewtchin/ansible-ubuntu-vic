@@ -38,7 +38,7 @@ Run the following commands:
 6. Clone development repos
 
    ```shell
-   export GITHUB_USERNAME=<Github username>
+   export GITHUB_USER=<Github username>
    bash <(curl -L https://raw.githubusercontent.com/andrewtchin/ansible-ubuntu-vic/master/vmware-repos.sh)
    ```
 
