@@ -8,6 +8,8 @@ Create an Ubuntu 16.04 VM. Recommended minimum sizing is 2 vCPU and 4 GB RAM and
 
 Tested on Ubuntu 16.04 Desktop and Ubuntu 16.04 Server.
 
+This does not work on 18.04. See https://github.com/andrewtchin/ansible-ubuntu-vic/issues/1
+
 ### Run
 
 Run the following commands:
